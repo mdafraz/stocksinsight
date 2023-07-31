@@ -1,38 +1,110 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#  API Documentation
 
-## Getting Started
+## Deployed Instance:
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+```
+https://stocksinsight.vercel.app/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Endpoints
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### 1. Retrieve Announcements by CompanyID
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+This endpoint allows users to find announcements of a specific company or multiple companies.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**Endpoint:**
+```
+https://stocksinsight.vercel.app/api/announcement
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**Parameters:**
 
-## Learn More
+- `SCRIP_CD` (optional): The company ID to filter announcements. Use a single value for a specific company or mutiple for multiple companies.
 
-To learn more about Next.js, take a look at the following resources:
+**Example:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Retrieve announcements for a single company:
+  ```
+  GET /api/announcement?SCRIP_CD=COMPANY_ID
+  ```
+- Retrieve announcements for multiple companies:
+  ```
+  GET /api/announcement?SCRIP_CD=COMPANY_ID_1,COMPANY_ID_2
+  ```
+  
+### 2. Retrieve Announcements by Period
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This endpoint allows users to find announcements over a specified period (start and end dates) or announcements of a company/group of companies over a period.
 
-## Deploy on Vercel
+**Endpoint:**
+```
+GET /api/announcement?from=START_DATE&to=END_DATE
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Parameters:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `from` (required): The start date of the period to filter announcements . 
+- `to` (required): The end date of the period to filter announcements . 
+- `SCRIP_CD` (optional): The company ID to filter announcements. Use a single value for a specific company or mutiple for multiple companies.
+- `critAnnouncement` (optional): Set to `true` to filter critical announcements.
+
+**Example:**
+
+- Retrieve announcements over a specified period:
+  ```
+  GET /api/announcement?start=2023-07-01&end=2023-07-31
+  ```
+
+
+### 3. Retrieve Critical Announcements
+
+This endpoint allows users to find all the critical announcements.
+
+**Endpoint:**
+```
+GET /api/announcement?critAnnouncement=true
+```
+
+**Parameters:**
+
+- `critAnnouncement`: Set to `true` to filter critical announcements.
+- `SCRIP_CD` (optional): The company ID to filter announcements. Use a single value for a specific company or mutiple for multiple companies.
+- `from` (optional): The start date of the period to filter announcements . 
+- `to` (optional): The end date of the period to filter announcements . 
+
+
+### 4. Retrieve Announcements from the Past 1-2 Days
+
+This endpoint allows users to retrieve announcements from the past 1-2 days in descending time order.
+
+**Endpoint:**
+```
+GET api/recentAnnouncements/announcements?d=2
+```
+
+**Parameters:**
+
+- `d` (required): The number of days to retrieve announcements from (1 or 2).
+
+**Example:**
+
+- Retrieve announcements from the past 1 day:
+  ```
+  GET api/recentAnnouncements/announcements?d=1
+  ```
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
